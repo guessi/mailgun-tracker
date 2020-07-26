@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  mailgun-tracker:
+    image: guessi/mailgun-tracker
+    volumes:
+    - ./config.yaml:/opt/config.yaml:ro
+    ports:
+    - 8080:8080
+    logging:
+      driver: json-file
+      options:
+        max-size: 20m
+        max-file: "30"
+    privileged: true
