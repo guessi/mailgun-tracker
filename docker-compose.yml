@@ -4,7 +4,7 @@ services:
   mailgun-tracker:
     image: guessi/mailgun-tracker
     volumes:
-    - ./config.yaml:/opt/config.yaml:ro
+    - ./config.yaml:/config.yaml:ro
     ports:
     - 8080:8080
     logging:
