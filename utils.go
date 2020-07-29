@@ -31,6 +31,11 @@ func loadConfigure(v *viper.Viper) {
 		log.Fatalf("missing config: mailgun_api_key")
 	}
 
+	mailgun_ignore_event_types = v.GetStringSlice("mailgun.ignore_event_types")
+	if len(mailgun_ignore_event_types) <= 0 {
+		log.Printf("missing config: mailgun_ignore_event_types")
+	}
+
 	slack_username = v.GetString("slack.username")
 	if len(slack_username) <= 0 {
 		log.Fatalf("missing config: slack_username")

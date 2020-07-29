@@ -1,8 +1,9 @@
 package main
 
 var (
-	mailgun_domain  string
-	mailgun_api_key string
+	mailgun_domain             string
+	mailgun_api_key            string
+	mailgun_ignore_event_types []string
 
 	slack_username    string
 	slack_channel     string

@@ -27,6 +27,12 @@ func verifyWebhookSignature(s mailgun.Signature) error {
 }
 
 func logFailedAndSendNotification(event *events.Failed) {
+	for _, event_type := range mailgun_ignore_event_types {
+		if event.Reason == event_type {
+			return
+		}
+	}
+
 	msg := fmt.Sprintf("*StatusCode:* %d, *Severity:* %s, *Reason:* %s\n*Subject:* %s\n*From:* %s\n*To:* %s\n*MessageId:* %s\n",
 		event.DeliveryStatus.Code,
 		event.Severity,

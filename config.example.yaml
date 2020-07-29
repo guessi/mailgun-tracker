@@ -1,6 +1,18 @@
 mailgun:
   domain: example.com
   api_key: key-01234567890123456789
+  ignore_event_types:
+  - unknown
+  - generic
+  - bounce
+  - espblock
+  - greylisted
+  - blacklisted
+  - suppress-bounce
+  - suppress-complaint
+  - suppress-unsubscribe
+  - old
+  - hardfail
 
 slack:
   username: "Mailgun Bot"
