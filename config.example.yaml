@@ -13,10 +13,18 @@ mailgun:
   - suppress-unsubscribe
   - old
   - hardfail
+  bounce_alerts:
+  - bounce-test1@example.com
+  - bounce-test2@example.com
+  - bounce-test3@example.com
+
+cron:
+  check_period: "@every 60s"
 
 slack:
   username: "Mailgun Bot"
-  channel: "#general"
+  channel_general: "#general"
+  channel_emergency: "#general"
   webhook: "https://hooks.slack.com/services/XXXXXXXXXXXXXXXXXXXXXXXXXXX"
   icon_url: "https://pbs.twimg.com/profile_images/1989918123/ICON_MAILGUN_NOFX_reasonably_small.png"
-  footer_text: "mailgun-bot"
+  footer_text: "mailgun-bot-bounce-check"

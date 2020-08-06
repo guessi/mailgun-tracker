@@ -43,7 +43,7 @@ func logFailedAndSendNotification(event *events.Failed) {
 		event.Message.Headers.MessageID,
 	)
 
-	slackSendMessage("warning", msg)
+	slackSendMessage(slack_channel_general, "warning", msg)
 }
 
 func healthHandler(c *gin.Context) {

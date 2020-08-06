@@ -1,11 +1,14 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
+	"fmt"
 	"log"
 	"strconv"
 	"time"
 
+	mailgun "github.com/mailgun/mailgun-go/v4"
 	"github.com/slack-go/slack"
 	"github.com/spf13/viper"
 )
@@ -36,14 +39,29 @@ func loadConfigure(v *viper.Viper) {
 		log.Printf("missing config: mailgun_ignore_event_types")
 	}
 
+	mailgun_bounce_alerts = v.GetStringSlice("mailgun.bounce_alerts")
+	if len(mailgun_bounce_alerts) <= 0 {
+		log.Printf("missing config: mailgun_bounce_alerts")
+	}
+
+	cron_check_period = v.GetString("cron.check_period")
+	if len(cron_check_period) <= 0 {
+		log.Fatalf("missing config: cron_check_period")
+	}
+
 	slack_username = v.GetString("slack.username")
 	if len(slack_username) <= 0 {
 		log.Fatalf("missing config: slack_username")
 	}
 
-	slack_channel = v.GetString("slack.channel")
-	if len(slack_channel) <= 0 {
-		log.Fatalf("missing config: slack_channel")
+	slack_channel_general = v.GetString("slack.channel_general")
+	if len(slack_channel_general) <= 0 {
+		log.Fatalf("missing config: slack_channel_general")
+	}
+
+	slack_channel_emergency = v.GetString("slack.channel_emergency")
+	if len(slack_channel_emergency) <= 0 {
+		log.Fatalf("missing config: slack_channel_emergency")
 	}
 
 	slack_webhook = v.GetString("slack.webhook")
@@ -65,7 +83,7 @@ func loadConfigure(v *viper.Viper) {
 	v.SetDefault("port", "8080")
 }
 
-func slackSendMessage(color, msg string) {
+func slackSendMessage(channel, color, msg string) {
 	attachment := slack.Attachment{
 		Color:    color,
 		Fallback: msg,
@@ -78,10 +96,27 @@ func slackSendMessage(color, msg string) {
 		Username:    slack_username,
 		IconURL:     slack_icon_url,
 		Attachments: []slack.Attachment{attachment},
-		Channel:     slack_channel,
+		Channel:     channel,
 	}
 
 	if err := slack.PostWebhook(slack_webhook, &whmsg); err != nil {
 		log.Println(err)
+	}
+}
+
+func checkBounce() {
+	mg := mailgun.NewMailgun(mailgun_domain, mailgun_api_key)
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*10)
+	defer cancel()
+
+	for _, bounce := range mailgun_bounce_alerts {
+		s, err := mg.GetBounce(ctx, bounce)
+		if err != nil {
+			continue // skip if nothing found
+		}
+
+		msg := fmt.Sprintf(":scream::scream::scream:\n*Message:* %s was blocked by mailgun\n*Error Code*: %s\n*Error*: %s", s.Address, s.Code, s.Error)
+		slackSendMessage(slack_channel_emergency, "danger", msg)
 	}
 }
