@@ -8,6 +8,13 @@ platform:
   arch: amd64
 
 steps:
+- name: test
+  image: golang:1.15-alpine3.12
+  commands:
+  - go version
+  - go fmt ./...
+  # - go vet ./...
+
 - name: docker-build
   image: plugins/docker
   settings:
@@ -17,5 +24,11 @@ steps:
     password:
       from_secret: docker_password
     auto_tag: true
+  when:
+    branch:
+    - master
+    event:
+      exclude:
+      - pull_request
 
 ...
