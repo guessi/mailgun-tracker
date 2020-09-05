@@ -7,6 +7,7 @@ services:
     - ./config.yaml:/config.yaml:ro
     ports:
     - 8080:8080
+    restart: always
     logging:
       driver: json-file
       options:

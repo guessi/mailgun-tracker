@@ -2,30 +2,33 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/guessi/mailgun-tracker/config"
+	"github.com/guessi/mailgun-tracker/pkg/mailgun"
 	"github.com/robfig/cron/v3"
-	"github.com/spf13/viper"
 )
 
+var cfg config.Config
+
 func main() {
-	// config setup
-	v := viper.New()
-	loadConfigure(v)
+	cfg = config.LoadConfig()
 
 	// cron
-	c := cron.New()
-	c.AddFunc(cron_check_period, func() {
-		checkBounce()
+	cron := cron.New()
+	cron.AddFunc(cfg.CronConfig.CheckPeriod, func() {
+		mailgun.CheckBounce(cfg.MailgunConfig, cfg.SlackConfig)
 	})
-	c.Start()
+	cron.Start()
 
 	// http server setup
 	r := gin.Default()
 
 	v1 := r.Group("/v1")
 	{
-		v1.POST("/health", healthHandler)
-		v1.POST("/mailgun/permanent-failure", permanentFailureHandler)
+		v1.POST("/health", mailgun.HealthHandler)
+		v1.POST("/mailgun/permanent-failure", func(ctx *gin.Context) {
+			mailgun.PermanentFailureHandler(ctx, cfg.MailgunConfig, cfg.SlackConfig)
+		})
 	}
 
-	r.Run(":" + v.GetString("port"))
+	r.Run(":8080")
 }
