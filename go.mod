@@ -1,4 +1,4 @@
-module mgpkg
+module github.com/guessi/mailgun-tracker
 
 go 1.15
 
