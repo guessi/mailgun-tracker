@@ -14,10 +14,13 @@ func main() {
 
 	// cron
 	cron := cron.New()
-	cron.AddFunc(cfg.CronConfig.CheckPeriod, func() {
+	_, err := cron.AddFunc(cfg.CronConfig.CheckPeriod, func() {
 		mailgun.CheckBounce(cfg.MailgunConfig, cfg.SlackConfig)
 	})
-	cron.Start()
+	if err == nil {
+		// FIXME: should handle error here
+		cron.Start()
+	}
 
 	// http server setup
 	r := gin.Default()
@@ -30,5 +33,6 @@ func main() {
 		})
 	}
 
+	//nolint
 	r.Run(":8080")
 }

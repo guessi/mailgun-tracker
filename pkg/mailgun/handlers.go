@@ -21,17 +21,17 @@ func bounceHandler(b mailgun.Bounce, s config.Slack) {
 		},
 		slack.AttachmentField{
 			Title: "Detail Information",
-			Value: fmt.Sprintf("%s", b.Error),
+			Value: b.Error,
 			Short: false,
 		},
 		slack.AttachmentField{
 			Title: "Error Code",
-			Value: fmt.Sprintf("%s", b.Code),
+			Value: b.Code,
 			Short: true,
 		},
 		slack.AttachmentField{
 			Title: "Created At",
-			Value: fmt.Sprintf("%s", b.CreatedAt.String()),
+			Value: b.CreatedAt.String(),
 			Short: true,
 		},
 	}
@@ -55,27 +55,27 @@ func eventFailedHandler(m config.Mailgun, s config.Slack, event *events.Failed) 
 	attachmentFields := []slack.AttachmentField{
 		slack.AttachmentField{
 			Title: "Subject",
-			Value: fmt.Sprintf("%s", event.Message.Headers.Subject),
+			Value: event.Message.Headers.Subject,
 			Short: false,
 		},
 		slack.AttachmentField{
 			Title: "From",
-			Value: fmt.Sprintf("%s", event.Message.Headers.From),
+			Value: event.Message.Headers.From,
 			Short: true,
 		},
 		slack.AttachmentField{
 			Title: "To",
-			Value: fmt.Sprintf("%s", event.Message.Headers.To),
+			Value: event.Message.Headers.To,
 			Short: true,
 		},
 		slack.AttachmentField{
 			Title: "Message ID",
-			Value: fmt.Sprintf("%s", event.Message.Headers.MessageID),
+			Value: event.Message.Headers.MessageID,
 			Short: false,
 		},
 		slack.AttachmentField{
 			Title: "Serverity",
-			Value: fmt.Sprintf("%s", event.Severity),
+			Value: event.Severity,
 			Short: true,
 		},
 		slack.AttachmentField{
@@ -85,7 +85,7 @@ func eventFailedHandler(m config.Mailgun, s config.Slack, event *events.Failed) 
 		},
 		slack.AttachmentField{
 			Title: "Reason",
-			Value: fmt.Sprintf("%s", event.Reason),
+			Value: event.Reason,
 			Short: false,
 		},
 	}
