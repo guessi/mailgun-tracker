@@ -17,6 +17,9 @@ mailgun:
   - bounce-test1@example.com
   - bounce-test2@example.com
   - bounce-test3@example.com
+  ignoreRecipients:
+  - ignore1@example.com
+  - ignore2@example.com
 
 cron:
   checkPeriod: "@every 60s"

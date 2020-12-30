@@ -3,6 +3,7 @@ package mailgun
 import (
 	"fmt"
 	"log"
+	"strings"
 
 	"github.com/guessi/mailgun-tracker/config"
 	slackmsg "github.com/guessi/mailgun-tracker/pkg/slack"
@@ -45,8 +46,16 @@ func bounceHandler(b mailgun.Bounce, s config.Slack) {
 }
 
 func eventFailedHandler(m config.Mailgun, s config.Slack, event *events.Failed) {
-	for _, event_type := range m.IgnoreEventTypes {
-		if event.Reason == event_type {
+	for _, eventType := range m.IgnoreEventTypes {
+		if event.Reason == eventType {
+			log.Printf("Ignoring, event type: %s", eventType)
+			return
+		}
+	}
+
+	for _, recipient := range m.IgnoreRecipients {
+		if strings.Contains(event.Message.Headers.To, recipient) {
+			log.Printf("Ignoring, recipient %s contains %s", event.Message.Headers.To, recipient)
 			return
 		}
 	}

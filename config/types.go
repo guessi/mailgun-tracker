@@ -10,6 +10,7 @@ type Mailgun struct {
 	Domain           string   `yaml:"domain,omitempty"`
 	APIKey           string   `yaml:"apiKey,omitempty"`
 	IgnoreEventTypes []string `yaml:"ignoreEventTypes,omitempty"`
+	IgnoreRecipients []string `yaml:"ignoreRecipients,omitempty"`
 	BounceAlerts     []string `yaml:"bounceAlerts,omitempty"`
 }
 
