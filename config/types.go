@@ -7,11 +7,12 @@ type Config struct {
 }
 
 type Mailgun struct {
-	Domain           string   `yaml:"domain,omitempty"`
-	APIKey           string   `yaml:"apiKey,omitempty"`
-	IgnoreEventTypes []string `yaml:"ignoreEventTypes,omitempty"`
-	IgnoreRecipients []string `yaml:"ignoreRecipients,omitempty"`
-	BounceAlerts     []string `yaml:"bounceAlerts,omitempty"`
+	Domain                  string   `yaml:"domain,omitempty"`
+	APIKey                  string   `yaml:"apiKey,omitempty"`
+	IgnoreEventTypes        []string `yaml:"ignoreEventTypes,omitempty"`
+	IgnoreRecipientKeywords []string `yaml:"ignoreRecipientKeywords,omitempty"`
+	IgnoreSubjectKeywords   []string `yaml:"ignoreSubjectKeywords,omitempty"`
+	BounceAlerts            []string `yaml:"bounceAlerts,omitempty"`
 }
 
 type Slack struct {

@@ -45,19 +45,34 @@ func bounceHandler(b mailgun.Bounce, s config.Slack) {
 	}
 }
 
-func eventFailedHandler(m config.Mailgun, s config.Slack, event *events.Failed) {
-	for _, eventType := range m.IgnoreEventTypes {
-		if event.Reason == eventType {
-			log.Printf("Ignoring, event type: %s", eventType)
-			return
+func skipFailureOrNot(m config.Mailgun, e *events.Failed) bool {
+	for _, t := range m.IgnoreEventTypes {
+		if e.Reason == t {
+			log.Printf("Skip event with event type: %s", t)
+			return true
 		}
 	}
 
-	for _, recipient := range m.IgnoreRecipients {
-		if strings.Contains(event.Message.Headers.To, recipient) {
-			log.Printf("Ignoring, recipient %s contains %s", event.Message.Headers.To, recipient)
-			return
+	for _, r := range m.IgnoreRecipientKeywords {
+		if strings.Contains(e.Message.Headers.To, r) {
+			log.Printf("Skip recipient %s contains %s", e.Message.Headers.To, r)
+			return true
 		}
+	}
+
+	for _, s := range m.IgnoreSubjectKeywords {
+		if strings.Contains(e.Message.Headers.Subject, s) {
+			log.Printf("Skip subject %s contains %s", e.Message.Headers.Subject, s)
+			return true
+		}
+	}
+
+	return false
+}
+
+func eventFailedHandler(m config.Mailgun, s config.Slack, event *events.Failed) {
+	if skipFailureOrNot(m, event) {
+		return
 	}
 
 	preText := "<!here> :bangbang: :bangbang: :bangbang:"
