@@ -1,3 +1,7 @@
-config.yml
+*.md
+.drone*
+Dockerfile
+config.example.yaml
 config.yaml
+config.yml
 secrets.txt

@@ -1,8 +1,8 @@
 FROM golang:1.15-alpine3.13 as BUILDER
 RUN apk add --no-cache git
-RUN go get -u github.com/guessi/mailgun-tracker
 WORKDIR ${GOPATH}/src/github.com/guessi/mailgun-tracker
-RUN go build
+COPY . .
+RUN go build -o /go/bin/mailgun-tracker
 
 FROM alpine:3.13
 COPY --from=BUILDER /go/bin/mailgun-tracker /opt/
