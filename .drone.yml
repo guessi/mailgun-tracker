@@ -15,6 +15,13 @@ steps:
   - go fmt ./...
   # - go vet ./...
 
+- name: docker-build-dry-run
+  image: plugins/docker
+  settings:
+    repo: guessi/mailgun-tracker
+    dry_run: true
+    auto_tag: true
+
 - name: docker-build
   image: plugins/docker
   settings:
