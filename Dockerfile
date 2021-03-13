@@ -1,4 +1,4 @@
-FROM golang:1.15-alpine3.13 as BUILDER
+FROM golang:1.16-alpine3.13 as BUILDER
 RUN apk add --no-cache git
 WORKDIR ${GOPATH}/src/github.com/guessi/mailgun-tracker
 COPY . .
