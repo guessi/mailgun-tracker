@@ -21,6 +21,10 @@ steps:
     repo: guessi/mailgun-tracker
     dry_run: true
     auto_tag: true
+  when:
+    event:
+      include:
+      - pull_request
 
 - name: docker-build
   image: plugins/docker
