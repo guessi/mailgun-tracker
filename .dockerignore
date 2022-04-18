@@ -5,3 +5,6 @@ config.example.yaml
 config.yaml
 config.yml
 secrets.txt
+
+.git
+.gitignore
