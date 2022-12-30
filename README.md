@@ -6,7 +6,6 @@
 
 [![Docker Stars](https://img.shields.io/docker/stars/guessi/mailgun-tracker.svg)](https://hub.docker.com/r/guessi/mailgun-tracker/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/guessi/mailgun-tracker.svg)](https://hub.docker.com/r/guessi/mailgun-tracker/)
-[![Build Status](https://cloud.drone.io/api/badges/guessi/mailgun-tracker/status.svg)](https://cloud.drone.io/guessi/mailgun-tracker)
 
 
 # Prerequisites
