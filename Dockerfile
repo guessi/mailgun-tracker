@@ -2,7 +2,7 @@ FROM public.ecr.aws/docker/library/golang:1.20-alpine3.17 as BUILDER
 RUN apk add --no-cache git ca-certificates
 WORKDIR ${GOPATH}/src/github.com/guessi/mailgun-tracker
 COPY . .
-RUN CGO_ENABLED=0 go build -o /go/bin/mailgun-tracker
+RUN GOPROXY=direct CGO_ENABLED=0 go build -o /go/bin/mailgun-tracker
 
 FROM scratch
 COPY --from=BUILDER /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
