@@ -10,7 +10,7 @@
 
 # Prerequisites
 
-- Docker-CE 20.10+
+- Docker 25.0+
 
 # Usage
 
