@@ -1,4 +1,4 @@
-FROM public.ecr.aws/docker/library/golang:1.23-alpine3.21 as BUILDER
+FROM public.ecr.aws/docker/library/golang:1.24-alpine3.21 as BUILDER
 RUN apk add --no-cache git ca-certificates
 WORKDIR ${GOPATH}/src/github.com/guessi/mailgun-tracker
 COPY . .
