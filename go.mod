@@ -2,13 +2,13 @@ module github.com/guessi/mailgun-tracker
 
 go 1.24.0
 
-toolchain go1.24.3
+toolchain go1.24.4
 
 require (
-	github.com/gin-gonic/gin v1.10.0
+	github.com/gin-gonic/gin v1.10.1
 	github.com/mailgun/mailgun-go/v4 v4.23.0
 	github.com/robfig/cron/v3 v3.0.1
-	github.com/slack-go/slack v0.16.0
+	github.com/slack-go/slack v0.17.1
 	github.com/spf13/viper v1.20.1
 )
 
