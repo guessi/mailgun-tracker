@@ -2,13 +2,13 @@ module github.com/guessi/mailgun-tracker
 
 go 1.24.0
 
-toolchain go1.24.4
+toolchain go1.24.5
 
 require (
 	github.com/gin-gonic/gin v1.10.1
 	github.com/mailgun/mailgun-go/v4 v4.23.0
 	github.com/robfig/cron/v3 v3.0.1
-	github.com/slack-go/slack v0.17.1
+	github.com/slack-go/slack v0.17.3
 	github.com/spf13/viper v1.20.1
 )
 
@@ -53,6 +53,6 @@ require (
 )
 
 replace (
-	gopkg.in/yaml.v2 => gopkg.in/yaml.v2 v2.4.0
-	gopkg.in/yaml.v3 => gopkg.in/yaml.v3 v3.0.1
+	gopkg.in/yaml.v2 => go.yaml.in/yaml/v2 v2.4.0
+	gopkg.in/yaml.v3 => go.yaml.in/yaml/v3 v3.0.1
 )
