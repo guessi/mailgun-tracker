@@ -6,7 +6,7 @@ require (
 	github.com/gin-gonic/gin v1.11.0
 	github.com/mailgun/mailgun-go/v4 v4.23.0
 	github.com/robfig/cron/v3 v3.0.1
-	github.com/slack-go/slack v0.18.0
+	github.com/slack-go/slack v0.23.1
 	github.com/spf13/viper v1.21.0
 )
 
